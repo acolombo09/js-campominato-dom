@@ -25,7 +25,7 @@ function onBtnClick() {
   // assegno al squaregenerator il valore della select dell'utente
   // parse int per essere sicuro che mi ritorna un numero
   const squareGenerator = parseInt(squareGeneratorSelect.value);
-
+  const bombs = bombsGenerator();
   // aggiungo una sezione in jsdocs per ovviare al problema element al select.value
   // console log di test per vedere se funziona il listener con la select
   console.log("Il valore scelto è", squareGenerator);
@@ -36,7 +36,7 @@ function onBtnClick() {
    * @returns {HTMLDivElement}
    */
   
-  function singleSquareGenerator(squareContent, squareCounts) {
+  function singleSquareGenerator(squareContent, squareCounts,bombs ) {
     //Genero un div square e gli aggiungo una classe per modificarlo a piacimento
     const square = document.createElement("div");
 
@@ -49,6 +49,8 @@ function onBtnClick() {
     square.addEventListener("click", function(){
       // il toggle toglie, e se l'elemento non ha alcuna classe lo aggiunge
       square.classList.toggle("bg-success");
+      console.log(squareContent);
+      console.log(bombs);
     })
 
     return square;
@@ -61,11 +63,11 @@ function onBtnClick() {
    * @param {number} squaresNumber // numero di quadrati da creare nella griglia
    * @returns {HTMLDivElement[]} // mi ritorna un array di div
    */
-  function createGrid(squaresNumber){
+  function createGrid(squaresNumber,bombs ){
     // all'interno di ogni ciclo, creo un singolo quadrato
     const grid = [];
     for (let i = 1; i <= squaresNumber; i++) {
-      const newSquare = singleSquareGenerator(i, squaresNumber);
+      const newSquare = singleSquareGenerator(i, squaresNumber, bombs);
 
     // devo far in modo di inserire questo square nell'array,
     // perchè non me ne faccio nulla di un solo square
@@ -75,13 +77,12 @@ function onBtnClick() {
     return grid;
   }
   // devo generare la griglia al click del pulsante tramite function creategrid
-  const gridList = createGrid(squareGenerator);
+  const gridList = createGrid(squareGenerator,bombs );
   // console log per capire cosa ottengo da gridlist
   console.log(gridList);
   gridPrint(gridContainer, gridList);
 
   // creata griglia virtuale, ora però devo passare al DOM
-
   /**
    * @param {HTMLElement} container // la lista dei quadrati
    * @param {HTMLDivElement[]} squaresList // array quadrati div
@@ -161,10 +162,15 @@ function bombsGenerator(){
   }
   return numbers;
 }
+
 // verifico se effettivamente funziona
-const bombs = bombsGenerator();
-for (let i = 0; i < bombs.length; i++) {
-  console.log(bombs[i]);
-  // tienilo da parte per stampare i numeri in un elemento HTML:
-  // document.getElementById('idElementoHTML').innerHTML += bombs[i];
-}
+// for (let i = 0; i < bombs.length; i++) {
+//   console.log(bombs[i]);
+//   // tienilo da parte per stampare i numeri in un elemento HTML:
+//   // document.getElementById('idElementoHTML').innerHTML += bombs[i];
+// }
+
+/* devo controllare al click dell’utente sulla cella: se il numero è presente nella lista 
+dei numeri generati - abbiamo calpestato una bomba - la cella si colora 
+di rosso e la partita termina. Altrimenti la cella cliccata si colora 
+di azzurro */

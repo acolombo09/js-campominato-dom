@@ -1,26 +1,38 @@
 "use strict"
 /*
 Consegna
-L’utente clicca su un bottone che genererà una griglia di gioco quadrata.
-Ogni cella ha un numero progressivo, da 1 a 100.
-Ci saranno quindi 10 caselle per ognuna delle 10 righe.
-Quando l’utente clicca su ogni cella, la cella cliccata si colora di azzurro 
-ed emetto un messaggio in console con il numero della cella cliccata.
---------------------------------------------------------------------------------
-Bonus
-Aggiungere una select accanto al bottone di generazione, che fornisca 
-una scelta tra tre diversi livelli di difficoltà:
-- con “facile”=> 100 caselle, con un numero compreso tra 1 e 100, divise in 10 caselle per 10 righe;
-- con “medio” => 81 caselle, con un numero compreso tra 1 e 81, divise in 9 caselle per 9 righe;
-- con “difficile” => 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe;
----------------------------------------------------------------------------------
+Copiamo la griglia fatta ieri nella nuova repo e aggiungiamo la logica del gioco
+(attenzione: non bisogna copiare tutta la cartella dell’esercizio ma solo 
+l’index.html, e le cartelle js/ css/ con i relativi script e fogli di stile, 
+per evitare problemi con l’inizializzazione di git).
+Il computer deve generare 16 numeri casuali nello stesso range della difficoltà 
+prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata 
+al massimo una bomba, perciò nell’array delle bombe non potranno esserci due 
+numeri uguali.
+In seguito l’utente clicca su una cella: se il numero è presente nella lista 
+dei numeri generati - abbiamo calpestato una bomba - la cella si colora 
+di rosso e la partita termina. Altrimenti la cella cliccata si colora 
+di azzurro e l’utente può continuare a cliccare sulle altre celle.
+La partita termina quando il giocatore clicca su una bomba o quando raggiunge 
+il numero massimo possibile di numeri consentiti 
+(ovvero quando ha rivelato tutte le celle che non sono bombe).
+Al termine della partita il software deve comunicare il punteggio, 
+cioè il numero di volte che l’utente ha cliccato su una cella 
+che non era una bomba.
+---------------------------------------------------------------------------------------------------------
+BONUS:
+Aggiungere una select accanto al bottone di generazione, che fornisca una scelta tra tre diversi livelli di difficoltà:
+- difficoltà 1 ⇒ 100 caselle, con un numero compreso tra 1 e 100, divise in 10 caselle per 10 righe;
+- difficoltà 2 ⇒ 81 caselle, con un numero compreso tra 1 e 81, divise in 9 caselle per 9 righe;
+- difficoltà 3 ⇒ 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe;
+----------------------------------------------------------------------------------------------------------
 Consigli del giorno:
-Scriviamo prima cosa vogliamo fare passo passo in italiano, dividiamo il lavoro 
-in micro problemi.
+Scriviamo prima cosa vogliamo fare passo passo in italiano, 
+dividiamo il lavoro in micro problemi.
 Ad esempio:
 Di cosa ho bisogno per generare i numeri?
-Proviamo sempre prima con dei console.log() per capire se stiamo ricevendo 
-i dati giusti.
+Proviamo sempre prima con dei console.log() per capire se stiamo 
+ricevendo i dati giusti.
 Le validazioni e i controlli possiamo farli anche in un secondo momento.
 */
 
@@ -131,79 +143,3 @@ function onBtnClick() {
 // posso resettare prima dell'append che mi aggiunge i div
 // con un container.innerHTML = ""; (vuoto)
 // aggiungo un event listener per cambiare sfondo al click
-
-//------------------------------------------------------------------------------
-// Riscrivo tutto il codice "pulito", senza commenti
-
-// /**
-//  * @type {HTMLSelectElement} //così le select vengono effettivamente riconosciute come select
-//  */
-
-// const squareGeneratorSelect = document.querySelector("[name='squareGenerator']");
-// const btnPlay = document.getElementById("btn-play");
-
-// /**
-//  * @type {HTMLElement}
-//  */
-// const gridContainer = document.querySelector(".grid-container");
-
-// btnPlay.addEventListener("click", onBtnClick);
-
-// function onBtnClick() {
-
-//   const squareGenerator = parseInt(squareGeneratorSelect.value);
-//   console.log("Il valore scelto è", squareGenerator);
-
-//   /**
-//    * @param {string} squareContent //per il contenuto testuale nel quadrato
-//    * @param {number} squareCounts 
-//    * @returns {HTMLDivElement}
-//    */
-
-//   function singleSquareGenerator(squareContent, squareCounts) {
-//     const square = document.createElement("div");
-
-//     const squaresPerRow = Math.sqrt(squareCounts);
-
-//     square.classList.add("grid-square");
-//     square.textContent = squareContent;
-//     square.style.flexBasis = `calc(100% / ${squaresPerRow})`;
-
-//     square.addEventListener("click", function(){
-//       square.classList.toggle("bg-success");
-//     })
-//     return square;
-//   }
-
-//   /**
-//    * Crea una griglia in base al numero di celle dato
-//    * @param {number} squaresNumber // numero di quadrati da creare nella griglia
-//    * @returns {HTMLDivElement[]} // mi ritorna un array di div
-//    */
-//   function createGrid(squaresNumber){
-//     const grid = [];
-//     for (let i = 1; i <= squaresNumber; i++) {
-//       const newSquare = singleSquareGenerator(i, squaresNumber);
-
-//       grid.push(newSquare);
-//     }
-//     return grid;
-//   }
-
-//   const gridList = createGrid(squareGenerator);
-
-//   console.log(gridList);
-//   gridPrint(gridContainer, gridList);
-
-//   /**
-//    * @param {HTMLElement} container // la lista dei quadrati
-//    * @param {HTMLDivElement[]} squaresList // array quadrati div
-//    */
-//   function gridPrint(container, squaresList){
-//     // reset html
-//     container.innerHTML = "";
-//     for (let i = 0; i < squaresList.length; i++) {
-//       container.append(squaresList[i]);
-//     }
-//   }
-// }

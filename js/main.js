@@ -174,3 +174,19 @@ function bombsGenerator(){
 dei numeri generati - abbiamo calpestato una bomba - la cella si colora 
 di rosso e la partita termina. Altrimenti la cella cliccata si colora 
 di azzurro */
+
+// verifico se il numero è presente nella lista dei numeri generati
+
+// if (numeriGenerati.includes(numeroGenerato)) {
+//   // il numero generato è presente nell'array
+// } else {
+//   // il numero generato non è presente nell'array
+// }
+
+// modifico lo sfondo in base alla presenza o meno del numero nella cella
+
+// if (numeriGenerati.includes(numeroGenerato)) {
+//   document.querySelector('#cella1').style.backgroundColor = 'danger';
+// } else {
+//   document.querySelector('#cella1').style.backgroundColor = 'info';
+// }

@@ -46,11 +46,40 @@ function onBtnClick() {
     square.textContent = squareContent;
     square.style.flexBasis = `calc(100% / ${squaresPerRow})`;
 
+    let gameEnded = false; // variabile che indica se la partita è finita
+
     square.addEventListener("click", function(){
       // il toggle toglie, e se l'elemento non ha alcuna classe lo aggiunge
       square.classList.toggle("bg-success");
       console.log(squareContent);
       console.log(bombs);
+      if (gameEnded) {
+        revealBombs(bombs, gridList); // chiamo la funzione revealBombs()
+        return; // se la partita è finita, non faccio nulla
+      }
+      if (bombs.includes(squareContent)) {
+        // se il numero del quadrato corrente è presente nella lista delle bombe
+        // coloro la cella di rosso e termino la partita
+        square.classList.add("bg-danger");
+        alert("Hai calpestato una bomba! Partita terminata.");
+        gameEnded = true;
+        disableSquares();
+      } else {
+        // altrimenti coloro la cella di azzurro
+        square.classList.add("bg-primary");
+      }
+      function disableSquares() {
+        for (let i = 0; i < grid.length; i++) {
+          grid[i].removeEventListener("click", onClick);
+        }
+      }
+      function revealBombs(bombs, squaresList) {
+        for (let i = 0; i < squaresList.length; i++) {
+          if (bombs.includes(parseInt(squaresList[i].textContent))) {
+            squaresList[i].classList.add("bg-danger");
+          }
+        }
+      }
     })
 
     return square;
@@ -76,8 +105,9 @@ function onBtnClick() {
     //output function
     return grid;
   }
+
   // devo generare la griglia al click del pulsante tramite function creategrid
-  const gridList = createGrid(squareGenerator,bombs );
+  const gridList = createGrid(squareGenerator, bombs);
   // console log per capire cosa ottengo da gridlist
   console.log(gridList);
   gridPrint(gridContainer, gridList);
@@ -163,13 +193,6 @@ function bombsGenerator(){
   return numbers;
 }
 
-// verifico se effettivamente funziona
-// for (let i = 0; i < bombs.length; i++) {
-//   console.log(bombs[i]);
-//   // tienilo da parte per stampare i numeri in un elemento HTML:
-//   // document.getElementById('idElementoHTML').innerHTML += bombs[i];
-// }
-
 /* devo controllare al click dell’utente sulla cella: se il numero è presente nella lista 
 dei numeri generati - abbiamo calpestato una bomba - la cella si colora 
 di rosso e la partita termina. Altrimenti la cella cliccata si colora 
@@ -185,8 +208,28 @@ di azzurro */
 
 // modifico lo sfondo in base alla presenza o meno del numero nella cella
 
+
+// viene data la classe creata nel css
+  //boxFlowers.classlist.add("box-flowers");
+// stampa nel boxFlowers tutte le i che sono tutti i numeri
+  //boxFlowers.innerHTML = i.toString();
+// al boxFlowers dare un flex basis con un calc 100 / la radice dei numeri
+  //boxFlowers.style.flexBasis = `calc(100% / ${BlockGenerator})`;
+
+//  //Se i numeri di bombGenerator sono presenti nelle "i"  colorali di rosso
+//   if (bombGenerator.indexOf(i) >= 0) {
+//     boxFlowers.classList.toggle("bg-danger");
+//     console.log("Hai perso");
+//     alert("Hai Perso!");
+// }
+
+// includes genera un booleano
 // if (numeriGenerati.includes(numeroGenerato)) {
 //   document.querySelector('#cella1').style.backgroundColor = 'danger';
 // } else {
 //   document.querySelector('#cella1').style.backgroundColor = 'info';
+// }
+
+// if (bomb === true){
+// this.innerHTML = "<i class='fa-solid fa-bomb'></i>"
 // }
